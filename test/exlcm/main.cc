@@ -1,11 +1,13 @@
 #include "example_t.hpp"
 #include "../../include/CommNode.h"
+#include <stdio.h>
 
 
 
 using example_t = exlcm::example_t;
+typedef void(* Callback_t)(const lcm::ReceiveBuffer* rbuf, const std::string& channel, const example_t* msg, int state);
 int main(int argc, char* argv[]) {
-    auto comm = std::make_shared<LcmNode<example_t>>();
+    auto comm = std::make_shared<LcmNode<example_t, Callback_t>>();
     example_t my_data;
 
     my_data.timestamp = 0;
@@ -26,9 +28,11 @@ int main(int argc, char* argv[]) {
     my_data.name = "example string";
     my_data.enabled = true;
    
+    printf("start publish\n");
     comm->publish("EXAMPLE", my_data);
+    printf("end publish\n");
      
-    LcmNode<example_t>::Callback_t callback = [](const lcm::ReceiveBuffer* rbuf, const std::string& chan, const example_t* msg, void* ptr) {
+    auto callback = [](const lcm::ReceiveBuffer* rbuf, const std::string& chan, const example_t* msg, int state) {
         int i;
         printf("Received message on channel \"%s\":\n", chan.c_str());
         printf("  timestamp   = %lld\n", (long long)msg->timestamp);
@@ -44,6 +48,7 @@ int main(int argc, char* argv[]) {
         printf("  name        = '%s'\n", msg->name.c_str());
         printf("  enabled     = %d\n", msg->enabled);
     };
+    printf("start sub");
     comm->subscribe("EXAMPLE", callback);
     return 0;
 }
