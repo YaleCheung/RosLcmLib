@@ -1,13 +1,14 @@
 #include "example_t.hpp"
-#include "../../include/CommNode.h"
+#include "../../include/lcm_node.h"
 #include <stdio.h>
 
 
 
 using example_t = exlcm::example_t;
-typedef void(* Callback_t)(const lcm::ReceiveBuffer* rbuf, const std::string& channel, const example_t* msg, int state);
+
+typedef void(* Callback_t)(const lcm::ReceiveBuffer* rbuf, const std::string& channel, const example_t* msg, std::nullptr_t);
 int main(int argc, char* argv[]) {
-    auto comm = std::make_shared<LcmNode<example_t, Callback_t>>();
+    auto comm = std::make_shared<LCMNode<example_t, Callback_t>>();
     example_t my_data;
 
     my_data.timestamp = 0;
@@ -32,7 +33,7 @@ int main(int argc, char* argv[]) {
     comm->publish("EXAMPLE", my_data);
     printf("end publish\n");
      
-    auto callback = [](const lcm::ReceiveBuffer* rbuf, const std::string& chan, const example_t* msg, int state) {
+    auto callback = [](const lcm::ReceiveBuffer* rbuf, const std::string& chan, const example_t* msg, std::nullptr_t ptr) {
         int i;
         printf("Received message on channel \"%s\":\n", chan.c_str());
         printf("  timestamp   = %lld\n", (long long)msg->timestamp);
