@@ -1,5 +1,9 @@
 #ifndef LCMSUBSCRIBER_HHH 
 #define LCMSUBSCRIBER_HHH 
+
+#include "basic_subscriber.h"
+#include <cstddef>
+
 template<typename Callback_t>
 class LCMSubscriber : public Subscriber<Callback_t> {
 public:
@@ -8,8 +12,9 @@ public:
 
 
     void subscribe(const std::string& channel, const Callback_t& callback) {
-        assert(! channel.empty());
-        _subscribe_method -> subscribeFunction(channel, callback, 0);
+        assert((! channel.empty()) &&
+               _subscribe_method->good());
+        _subscribe_method -> subscribeFunction(channel, callback, nullptr);
         _subscribe_method->handle();
     }
 

@@ -1,8 +1,8 @@
 #ifndef COMM_NODE_HHH
 #define COMM_NODE_HHH
 
-#include "Publisher.h"
-#include "Subscriber.h"
+#include "basic_publisher.h"
+#include "basic_subscriber.h"
 
 template<typename Data_t, typename Callback_t>
 class CommNode {
