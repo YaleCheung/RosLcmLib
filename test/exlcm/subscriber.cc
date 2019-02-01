@@ -37,7 +37,7 @@ class Handler {
 
 int main(int argc, char **argv)
 {
-    lcm::LCM lcm;
+    lcm::LCM lcm("udpm://...");
 
     if (!lcm.good())
         return 1;

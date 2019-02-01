@@ -29,7 +29,6 @@ int main(int argc, char **argv)
     my_data.enabled = true;
 
     lcm.publish("EXAMPLE", &my_data);
-    lcm.handle();
 
     return 0;
 }

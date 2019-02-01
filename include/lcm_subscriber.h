@@ -14,7 +14,8 @@ public:
     void subscribe(const std::string& channel, const Callback_t& callback) {
         assert((! channel.empty()) &&
                _subscribe_method->good());
-        _subscribe_method -> subscribeFunction(channel, callback, nullptr);
+        // _subscribe_method -> subscribeFunction(channel, callback, nullptr);
+         _subscribe_method -> subscribe(channel, callback, nullptr);
         _subscribe_method->handle();
     }
 
