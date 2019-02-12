@@ -9,10 +9,10 @@ constexpr uint32_t default_queue_size = 10;
 template<typename Data_t>
 class ROSPublisher : public Publisher<Data_t> {
 public:
-    ROSPublisher(std::shared_ptr<lcm::LCM> entity) :
-        _publish_method(entity), _queue_size(default_queue_size) { }
+    // ROSPublisher(std::shared_ptr<lcm::LCM> entity) :
+        // _publish_method(entity), _queue_size(default_queue_size) { }
 
-    ROSPublisher(std::shared_ptr<lcm::LCM> entity, const uint32_t queue_size) :
+    ROSPublisher(std::shared_ptr<lcm::LCM> entity, const uint32_t queue_size = default_queue_size) :
         _publish_method(entity) {
         setQueueSize(queue_size);
     }

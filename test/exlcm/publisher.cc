@@ -7,8 +7,6 @@
 
 using example_t = exlcm::example_t;
 
-// typedef void(* Callback_t)(const lcm::ReceiveBuffer* rbuf, const std::string& channel, const example_t* msg, void* contex);
-//
 using Callback_t = FunctionPrototype<exlcm::example_t>::LCMCallback;
 int main(int argc, char* argv[]) {
     auto comm = std::make_shared<LCMNode<example_t, Callback_t>>();

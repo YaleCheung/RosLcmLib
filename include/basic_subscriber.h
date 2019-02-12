@@ -9,7 +9,7 @@ using std::string;
 template<typename Callback_t>
 class Subscriber {
 public:
-    virtual void subscribe(const std::string& channel, const Callback_t& callback, void* ptr) = 0;
+    virtual void subscribe(const std::string& channel, const Callback_t& callback, void* context) = 0;
     virtual ~Subscriber() {};
 };
 

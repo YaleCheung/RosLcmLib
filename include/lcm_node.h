@@ -19,8 +19,8 @@ public:
     _publisher->publish(channel, data);
   }
 
-  void subscribe(const std::string& channel, const Callback_t& callback, void* ptr) {
-    _subscriber->subscribe(channel, callback, ptr);
+  void subscribe(const std::string& channel, const Callback_t& callback, void* context) {
+    _subscriber->subscribe(channel, callback, context);
   }
 
   void start() {

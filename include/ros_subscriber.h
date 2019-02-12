@@ -15,7 +15,7 @@ public:
     }
 
      
-    void subscribe(const std::string& channel, const Callback_t& callback) {
+    void subscribe(const std::string& channel, const Callback_t& callback, void* ) {
         assert((! channel.empty()) && 
                 ros::ok());
         _subscribe_method -> subscribe(channel, _queue_size, callback);

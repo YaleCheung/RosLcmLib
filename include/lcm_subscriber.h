@@ -18,11 +18,11 @@ public:
         //_subscribe_method -> handle();
     // }
 
-    void subscribe(const std::string& channel, const Callback_t& callback, void* ptr) {
+    void subscribe(const std::string& channel, const Callback_t& callback, void* context) {
         assert( (! channel.empty()) &&
                 _subscribe_method -> good()
               );
-        _subscribe_method -> subscribeFunction(channel, callback, ptr);
+        _subscribe_method -> subscribeFunction(channel, callback, context);
     }
 
     ~LCMSubscriber() {}
