@@ -11,15 +11,23 @@ public:
         _subscribe_method(entity) {}
 
 
-    void subscribe(const std::string& channel, const Callback_t& callback) {
-        assert((! channel.empty()) &&
-               _subscribe_method->good());
-        // _subscribe_method -> subscribeFunction(channel, callback, nullptr);
-         _subscribe_method -> subscribe(channel, callback, nullptr);
-        _subscribe_method->handle();
+    // void subscribe(const std::string& channel, const Callback_t& callback) {
+        // assert( (! channel.empty())            &&
+                // _subscribe_method -> good());
+         // _subscribe_method -> subscribeFunction(channel, callback, nullptr);
+        //_subscribe_method -> handle();
+    // }
+
+    void subscribe(const std::string& channel, const Callback_t& callback, void* ptr) {
+        assert( (! channel.empty()) &&
+                _subscribe_method -> good()
+              );
+        _subscribe_method -> subscribeFunction(channel, callback, ptr);
     }
 
     ~LCMSubscriber() {}
+
+
 
 private:
     std::shared_ptr<lcm::LCM> _subscribe_method;

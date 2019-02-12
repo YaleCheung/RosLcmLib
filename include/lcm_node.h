@@ -1,7 +1,7 @@
 #ifndef LCMNODE_HHH
 #define LCMNODE_HHH
 
-#include "node_basic.h"
+#include "basic_node.h"
 #include "lcm_publisher.h"
 #include "lcm_subscriber.h"
 
@@ -11,7 +11,7 @@ template<typename Data_t, typename Callback_t>
 class LCMNode : public CommNode<Data_t, Callback_t>{
 public:
   LCMNode() :
-    _comm_entity(std::make_unique<lcm::LCM>(default_ns)),
+    _comm_entity(std::make_unique<lcm::LCM>()),
     _publisher(std::make_unique<LCMPublisher<Data_t>>(_comm_entity)),
     _subscriber(std::make_unique<LCMSubscriber<Callback_t>>(_comm_entity)) {}
 
@@ -19,8 +19,13 @@ public:
     _publisher->publish(channel, data);
   }
 
-  void subscribe(const std::string& channel, const Callback_t& callback) {
-    _subscriber->subscribe(channel, callback);
+  void subscribe(const std::string& channel, const Callback_t& callback, void* ptr) {
+    _subscriber->subscribe(channel, callback, ptr);
+  }
+
+  void start() {
+     while(true)  
+         _comm_entity -> handle();
   }
 
   ~LCMNode() {};
