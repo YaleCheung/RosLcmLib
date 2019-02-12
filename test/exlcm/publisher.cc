@@ -1,12 +1,15 @@
 #include "example_t.hpp"
 #include "../../include/lcm_node.h"
 #include <stdio.h>
+#include "../../include/function_proto.h"
 
 
 
 using example_t = exlcm::example_t;
 
-typedef void(* Callback_t)(const lcm::ReceiveBuffer* rbuf, const std::string& channel, const example_t* msg, void* contex);
+// typedef void(* Callback_t)(const lcm::ReceiveBuffer* rbuf, const std::string& channel, const example_t* msg, void* contex);
+//
+using Callback_t = FunctionPrototype<exlcm::example_t>::LCMCallback;
 int main(int argc, char* argv[]) {
     auto comm = std::make_shared<LCMNode<example_t, Callback_t>>();
     example_t my_data;

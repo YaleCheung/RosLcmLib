@@ -4,7 +4,7 @@
 #include <functional>
 template<typename Data_t>
 struct FunctionPrototype {
-   typedef std::function<void(const lcm::ReceiveBuffer* rbuf, const std::string& channel, const Data_t* msg, void* ptr)> LCMCallback;
-}
+   typedef void (*LCMCallback)(const lcm::ReceiveBuffer* rbuf, const std::string& channel, const Data_t* msg, void* contex);
+};
 
 #endif  //FUNCTIONPROTOTYPE_HHH
