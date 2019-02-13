@@ -5,8 +5,6 @@
 #include "lcm_publisher.h"
 #include "lcm_subscriber.h"
 
-constexpr const char* default_ns = "memq://";
-
 template<typename Message, typename Callback>
 class LCMNode : public CommNode<Message, Callback>{
 public:
@@ -15,12 +13,14 @@ public:
     _publisher(std::make_unique<LCMPublisher<Message>>(_comm_entity)),
     _subscriber(std::make_unique<LCMSubscriber<Callback>>(_comm_entity)) {}
 
-  void publish(const std::string& channel, const Message& msg) const {
-    _publisher->publish(channel, msg);
+  // lcm doesn't support message queue, so drop it;
+  void publish(const std::string& channel, const Message& msg, const int queue_size) const {
+    _publisher->publish(channel, msg, 0);
   }
 
-  void subscribe(const std::string& channel, const Callback& callback, void* context) const{
-    _subscriber->subscribe(channel, callback, context);
+  // lcm doesn't support message queue, so drop it;
+  void subscribe(const std::string& channel, const Callback& callback,, void* context, const int queue_size = 0) const{
+    _subscriber->subscribe(channel, callback, context, 0);
   }
 
   void run() const {

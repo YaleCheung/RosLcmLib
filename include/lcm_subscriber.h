@@ -10,7 +10,7 @@ public:
     LCMSubscriber(std::shared_ptr<lcm::LCM> entity) :
         _subscribe_method(entity) {}
 
-    void subscribe(const std::string& channel, const Callback& callback, void* context) const {
+    void subscribe(const std::string& channel, const Callback& callback, void* context, const uint32_t queue_size) const {
         assert( (! channel.empty()) &&
                 _subscribe_method -> good()
               );

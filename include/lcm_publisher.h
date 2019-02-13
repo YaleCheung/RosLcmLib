@@ -8,7 +8,7 @@ public:
     LCMPublisher(std::shared_ptr<lcm::LCM> entity) :
         _publish_method(entity) { }
 
-    void publish(const std::string& channel, const Message& msg) const {
+    void publish(const std::string& channel, const Message& msg, const uint32_t buffer_size) const {
         assert(channel != "" && _publish_method->good());
         _publish_method->publish(channel, &msg);
     }
