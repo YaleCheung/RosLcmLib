@@ -7,35 +7,35 @@
 
 using example_t = exlcm::example_t;
 
-using Callback_t = FunctionPrototype<exlcm::example_t>::LCMCallback;
+using Callback = FunctionPrototype<exlcm::example_t>::LCMCallback;
 int main(int argc, char* argv[]) {
-    auto comm = std::make_shared<LCMNode<example_t, Callback_t>>();
-    example_t my_data;
+    auto comm = std::make_shared<LCMNode<example_t, Callback>>();
+    example_t my_msg;
 
     int* pint = new int;
     *pint = 2;
 
-    my_data.timestamp = 0;
-    my_data.position[0] = 1;
-    my_data.position[1] = 2;
-    my_data.position[2] = 3;
+    my_msg.timestamp = 0;
+    my_msg.position[0] = 1;
+    my_msg.position[1] = 2;
+    my_msg.position[2] = 3;
    
-    my_data.orientation[0] = 1;
-    my_data.orientation[1] = 0;
-    my_data.orientation[2] = 0;
-    my_data.orientation[3] = 0;
+    my_msg.orientation[0] = 1;
+    my_msg.orientation[1] = 0;
+    my_msg.orientation[2] = 0;
+    my_msg.orientation[3] = 0;
    
-    my_data.num_ranges = 15;
-    my_data.ranges.resize(my_data.num_ranges);
-    for(int i = 0; i < my_data.num_ranges; i++)
-        my_data.ranges[i] = i;
+    my_msg.num_ranges = 15;
+    my_msg.ranges.resize(my_msg.num_ranges);
+    for(int i = 0; i < my_msg.num_ranges; i++)
+        my_msg.ranges[i] = i;
    
-    my_data.name = "example string";
-    my_data.enabled = true;
+    my_msg.name = "example string";
+    my_msg.enabled = true;
    
      
-    auto callback = [](const lcm::ReceiveBuffer* rbuf, const std::string& chan, const example_t* msg, void* ptr) {
-        printf("%x\n", (int*)ptr);
+    auto callback = [](const lcm::ReceiveBuffer* rbuf, const std::string& chan, const example_t* msg, void* context) {
+        printf("%d\n", *(int*)context);
         int i;
         printf("Received message on channel \"%s\":\n", chan.c_str());
         printf("  timestamp   = %lld\n", (long long)msg->timestamp);
@@ -53,6 +53,6 @@ int main(int argc, char* argv[]) {
     };
     printf("start sub\n");
     comm->subscribe("EXAMPLE", callback, (void*)pint);
-    comm->start();
+    comm->run();
     return 0;
 }

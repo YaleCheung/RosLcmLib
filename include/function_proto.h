@@ -2,9 +2,9 @@
 #define FUNCTIONPROTOTYPE_HHH
 
 #include <functional>
-template<typename Data_t>
+template<typename Message>
 struct FunctionPrototype {
-   typedef void (*LCMCallback)(const lcm::ReceiveBuffer* rbuf, const std::string& channel, const Data_t* msg, void* context);
+   typedef void (*LCMCallback)(const lcm::ReceiveBuffer* rbuf, const std::string& channel, const Message* msg, void* context);
 };
 
 #endif  //FUNCTIONPROTOTYPE_HHH

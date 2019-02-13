@@ -7,23 +7,23 @@
 
 constexpr const char* default_ns = "memq://";
 
-template<typename Data_t, typename Callback_t>
-class LCMNode : public CommNode<Data_t, Callback_t>{
+template<typename Message, typename Callback>
+class LCMNode : public CommNode<Message, Callback>{
 public:
   LCMNode() :
     _comm_entity(std::make_unique<lcm::LCM>()),
-    _publisher(std::make_unique<LCMPublisher<Data_t>>(_comm_entity)),
-    _subscriber(std::make_unique<LCMSubscriber<Callback_t>>(_comm_entity)) {}
+    _publisher(std::make_unique<LCMPublisher<Message>>(_comm_entity)),
+    _subscriber(std::make_unique<LCMSubscriber<Callback>>(_comm_entity)) {}
 
-  void publish(const std::string& channel, const Data_t& data) {
-    _publisher->publish(channel, data);
+  void publish(const std::string& channel, const Message& msg) const {
+    _publisher->publish(channel, msg);
   }
 
-  void subscribe(const std::string& channel, const Callback_t& callback, void* context) {
+  void subscribe(const std::string& channel, const Callback& callback, void* context) const{
     _subscriber->subscribe(channel, callback, context);
   }
 
-  void start() {
+  void run() const {
      while(true)  
          _comm_entity -> handle();
   }
@@ -31,8 +31,8 @@ public:
   ~LCMNode() {};
 private:
   std::shared_ptr<lcm::LCM> _comm_entity;
-  std::unique_ptr<Publisher<Data_t>> _publisher;
-  std::unique_ptr<Subscriber<Callback_t>> _subscriber;
+  std::unique_ptr<Publisher<Message>> _publisher;
+  std::unique_ptr<Subscriber<Callback>> _subscriber;
 };
 
 #endif // LCMNODE_HHH 

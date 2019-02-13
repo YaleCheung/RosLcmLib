@@ -6,22 +6,20 @@
 
 constexpr uint32_t default_queue_size = 10;
 
-template<typename Data_t>
-class ROSPublisher : public Publisher<Data_t> {
+template<typename Message>
+class ROSPublisher : public Publisher<Message> {
 public:
     // ROSPublisher(std::shared_ptr<lcm::LCM> entity) :
         // _publish_method(entity), _queue_size(default_queue_size) { }
 
-    ROSPublisher(std::shared_ptr<lcm::LCM> entity, const uint32_t queue_size = default_queue_size) :
-        _publish_method(entity) {
-        setQueueSize(queue_size);
-    }
+    ROSPublisher(std::shared_ptr<ros::Publisher> entity, const uint32_t queue_size = default_queue_size) :
+        _publish_method(entity) , _queue_size(queue_size) {}
 
      
-    void publish(const std::string& channel, const Data_t& data) {
-        assert((! channel.empty() && 
+    void publish(const std::string& channel, const Message& msg) {
+        assert((! channel.empty()) && 
                ros::ok()); 
-        _publish_method->publish(channel, _queue_size, data);
+        _publish_method -> publish(channel, _queue_size, msg);
     }
 
     void setQueueSize(const uint32_t& queue_size) {

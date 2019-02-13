@@ -3,8 +3,8 @@
 
 #include "ros/ros.h"
 
-template<typename Callback_t>
-class ROSSubscriber : public Subscriber<Callback_t> {
+template<typename Callback>
+class ROSSubscriber : public Subscriber<Callback> {
 public:
     ROSSubscriber(std::shared_ptr<lcm::LCM> entity) :
         _subscribe_method(entity), _queue_size(default_queue_size) { }
@@ -15,7 +15,7 @@ public:
     }
 
      
-    void subscribe(const std::string& channel, const Callback_t& callback, void* ) {
+    void subscribe(const std::string& channel, const Callback& callback, void* ) {
         assert((! channel.empty()) && 
                 ros::ok());
         _subscribe_method -> subscribe(channel, _queue_size, callback);

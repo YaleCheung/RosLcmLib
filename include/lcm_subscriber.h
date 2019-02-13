@@ -4,21 +4,13 @@
 #include "basic_subscriber.h"
 #include <cstddef>
 
-template<typename Callback_t>
-class LCMSubscriber : public Subscriber<Callback_t> {
+template<typename Callback>
+class LCMSubscriber : public Subscriber<Callback> {
 public:
     LCMSubscriber(std::shared_ptr<lcm::LCM> entity) :
         _subscribe_method(entity) {}
 
-
-    // void subscribe(const std::string& channel, const Callback_t& callback) {
-        // assert( (! channel.empty())            &&
-                // _subscribe_method -> good());
-         // _subscribe_method -> subscribeFunction(channel, callback, nullptr);
-        //_subscribe_method -> handle();
-    // }
-
-    void subscribe(const std::string& channel, const Callback_t& callback, void* context) {
+    void subscribe(const std::string& channel, const Callback& callback, void* context) const {
         assert( (! channel.empty()) &&
                 _subscribe_method -> good()
               );

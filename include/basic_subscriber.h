@@ -4,12 +4,10 @@
 #include <string>
 #include <memory>
 
-using std::string;
-
-template<typename Callback_t>
+template<typename Callback>
 class Subscriber {
 public:
-    virtual void subscribe(const std::string& channel, const Callback_t& callback, void* context) = 0;
+    virtual void subscribe(const std::string& channel, const Callback& callback, void* context) const = 0;
     virtual ~Subscriber() {};
 };
 

@@ -2,15 +2,15 @@
 #define LCMPUBLISHER_HHH
 
 #include "basic_publisher.h"
-template<typename Data_t> 
-class LCMPublisher : public Publisher<Data_t> {
+template<typename Message> 
+class LCMPublisher : public Publisher<Message> {
 public:
     LCMPublisher(std::shared_ptr<lcm::LCM> entity) :
         _publish_method(entity) { }
 
-    void publish(const std::string& channel, const Data_t& data) {
+    void publish(const std::string& channel, const Message& msg) const {
         assert(channel != "" && _publish_method->good());
-        _publish_method->publish(channel, &data);
+        _publish_method->publish(channel, &msg);
     }
 
     ~LCMPublisher() {}
