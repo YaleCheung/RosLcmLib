@@ -14,18 +14,17 @@ public:
     _subscriber(std::make_unique<LCMSubscriber<Callback>>(_comm_entity)) {}
 
   // lcm doesn't support message queue, so drop it;
-  void publish(const std::string& channel, const Message& msg, const int queue_size) const {
+  void publish(const std::string& channel, const Message& msg, const uint32_t queue_size) {
     _publisher->publish(channel, msg, 0);
   }
 
   // lcm doesn't support message queue, so drop it;
-  void subscribe(const std::string& channel, const Callback& callback,, void* context, const int queue_size = 0) const{
+  void subscribe(const std::string& channel, const Callback& callback, void* context, const uint32_t queue_size = 0) {
     _subscriber->subscribe(channel, callback, context, 0);
   }
 
-  void run() const {
-     while(true)  
-         _comm_entity -> handle();
+  void handle() const {
+      _comm_entity -> handle();
   }
 
   ~LCMNode() {};

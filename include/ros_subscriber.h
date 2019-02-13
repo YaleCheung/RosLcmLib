@@ -7,30 +7,22 @@ template<typename Callback>
 class ROSSubscriber : public Subscriber<Callback> {
 public:
     ROSSubscriber(std::shared_ptr<lcm::LCM> entity) :
-        _subscribe_method(entity), _queue_size(default_queue_size) { }
+        _subscribe_method(entity), _queue_size(0) { }
 
-    ROSSubscriber(std::shared_ptr<lcm::LCM> entity, uint32_t queue_size) :
-        _subscribe_method(entity) { 
-        setQueueSize(queue_size);
-    }
-
-     
-    void subscribe(const std::string& channel, const Callback& callback, void* ) {
+    void subscribe(const std::string& channel, const Callback& callback, void* contex, uint32_t queue_size) {
         assert((! channel.empty()) && 
                 ros::ok());
+        _queue_size = queue_size;
+        _channel = channel;
         _subscribe_method -> subscribe(channel, _queue_size, callback);
-    }
-
-    void setQueueSize(uint32_t size) {
-        assert(size > 0);
-        _queue_size = size;
     }
 
     ~ROSSubscriber() {}
 
 private:
-    std::shared_ptr<ros::NodeHandle> _subscribe_method;
+    std::shared_ptr<ros::Subscriber> _subscribe_method;
     std::uint32_t _queue_size;
+    std::string _channel;
 };
 
 #endif //ROSSUBSCRIBER_HHH 

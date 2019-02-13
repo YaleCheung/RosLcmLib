@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) {
     my_msg.enabled = true;
    
     printf("start publish\n");
-    comm->publish("EXAMPLE", my_msg);
+    comm->publish("EXAMPLE", my_msg, 0);
     printf("end publish\n");
     return 0;
 }
