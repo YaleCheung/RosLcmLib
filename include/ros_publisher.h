@@ -15,7 +15,16 @@ public:
         _publish_method(entity), _channels_in_use(0) {}
 
     void publish(const std::string& channel, const Message& msg, const uint32_t queue_size) {
-        
+        auto idx = _index_publisher(channel);
+        // add a new publisher
+        if (idx < 0) {
+            assert(_channels_in_use < max_channels);
+            idx = _channels_in_use;
+            _publishers[idx] = _publish_method.advertise<Message>(channel, queue_size);
+            _channels[idx] = channel;
+            ++ _channels_in_use;
+        }
+        _publishers[idx].publish(msg);
     }
 
     ~ROSPublisher() {}
@@ -34,9 +43,6 @@ private:
     std::array<std::string, max_channels> _channels;
     
     uint32_t _channels_in_use;
-
-    uint32_t _queue_size;
-    std::string _channel;
 };
 
 #endif //ROSPUBLISER_HHH
