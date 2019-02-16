@@ -1,8 +1,6 @@
 #ifndef COMM_NODE_HHH
 #define COMM_NODE_HHH
 
-// #include "basic_publisher.h"
-// #include "basic_subscriber.h"
 #include <string>
 
 template<typename Message, typename Callback>
