@@ -14,7 +14,7 @@ public:
     ROSPublisher(std::shared_ptr<ros::Publisher> entity) :
         _publish_method(entity), _channels_in_use(0) {}
 
-    void publish(const std::string& channel, const Message& msg, const uint32_t queue_size) {
+    void publish(const std::string& channel, const Message& msg, uint32_t queue_size) {
         auto idx = _index_publisher(channel);
         // add a new publisher
         if (idx < 0) {

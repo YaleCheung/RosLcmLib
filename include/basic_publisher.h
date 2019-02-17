@@ -6,7 +6,7 @@
 template<typename Message>
 class Publisher {
 public:
-    virtual void publish(const std::string& name, const Message& msg, const uint32_t queue_size) = 0;
+    virtual void publish(const std::string& name, const Message& msg, uint32_t queue_size) = 0;
     virtual ~Publisher() {};
 };
 

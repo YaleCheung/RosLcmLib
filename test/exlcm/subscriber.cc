@@ -1,5 +1,5 @@
 #include "example_t.hpp"
-#include "../../include/lcm_node.h"
+#include "../../include/ipc_comm_node.h"
 #include <stdio.h>
 #include "../../include/function_proto.h"
 
@@ -9,7 +9,7 @@ using example_t = exlcm::example_t;
 
 using Callback = FunctionPrototype<exlcm::example_t>::LCMCallback;
 int main(int argc, char* argv[]) {
-    auto comm = std::make_shared<LCMNode<example_t, Callback>>();
+    auto comm = std::make_shared<IPCCommNode<example_t, Callback>>();
     example_t my_msg;
 
     int* pint = new int;
@@ -53,6 +53,7 @@ int main(int argc, char* argv[]) {
     };
     printf("start sub\n");
     comm->subscribe("EXAMPLE", callback, (void*)pint);
-    comm->run();
+    while(1)
+        comm->handle();
     return 0;
 }
