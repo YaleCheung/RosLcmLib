@@ -3,20 +3,22 @@
 
 #include <stdio.h>
 
-template<int N, int D = 1>
 class Ratio {
 public:
-    Ratio () {}
+    Ratio (double n, double d) :
+      ratio(n / d) {}
 
-    void get() {
+    double value() {
         return ratio;
     }
-
 private:
-    constexpr double ratio{double(N / D)};
-}
+    const double ratio;
+};
 
-template<int N>
-using Freq<N> = Ratio<N, 1>;
+class Freq : public Ratio {
+public:
+    Freq (double n) :
+        Ratio(n, 1) {}
+};
 
 #endif //RATIO_HHH
