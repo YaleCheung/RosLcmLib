@@ -33,7 +33,7 @@ public:
 
   // lcm doesn't support message queue, so drop it;
   void subscribe(const std::string& channel, const Callback& callback, void* context, uint32_t queue_size = 0) {
-    _subscriber->subscribe(channel, callback, context, 0);
+    _subscriber->subscribe(channel, callback, context, queue_size);
   }
 
   void handle() const {
