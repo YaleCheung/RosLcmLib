@@ -21,17 +21,20 @@
 template<typename Message, typename Callback>
 class IPCCommNode : public CommNode<Message, Callback>{
 public:
-  IPCCommNode() :
+  IPCCommNode(std::string node_name) :
     _comm_entity(std::make_unique<ENTITY>()),
     _publisher(std::make_unique<PUBLISHER<Message>>(_comm_entity)),
-    _subscriber(std::make_unique<SUBSCRIBER<Callback>>(_comm_entity)) {}
+    _subscriber(std::make_unique<SUBSCRIBER<Callback>>(_comm_entity)) {
+#ifdef _ROS
+    // ros need to be initialized before used;
+    ros::init(1, "IPC", node_name);
+#endif
+  }
 
-  // lcm doesn't support message queue, and will drop it;
   void publish(const std::string& channel, const Message& msg, uint32_t queue_size) {
     _publisher->publish(channel, msg, queue_size);
   }
 
-  // lcm doesn't support message queue, so drop it;
   void subscribe(const std::string& channel, const Callback& callback, void* context, uint32_t queue_size = 0) {
     _subscriber->subscribe(channel, callback, context, queue_size);
   }

@@ -6,10 +6,10 @@
 
 using example_t = exlcm::example_t;
 
-using Callback = FunctionPrototype<exlcm::example_t>::LCMCallback;
+using Callback = FunctionPrototype<exlcm::example_t>::Callback;
 
 int main(int argc, char* argv[]) {
-    auto comm = std::make_shared<IPCCommNode<example_t, Callback>>();
+    auto comm = std::make_shared<IPCCommNode<example_t, Callback>>("string");
     example_t my_msg;
 
     int* pint = new int;

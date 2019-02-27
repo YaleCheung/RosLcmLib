@@ -1,15 +1,15 @@
+#include <stdio.h>
 #include "example_t.hpp"
 #include "../../include/ipc_comm_node.h"
-#include <stdio.h>
 #include "../../include/function_proto.h"
 
 
 
 using example_t = exlcm::example_t;
 
-using Callback = FunctionPrototype<exlcm::example_t>::LCMCallback;
+using Callback = FunctionPrototype<exlcm::example_t>::Callback;
 int main(int argc, char* argv[]) {
-    auto comm = std::make_shared<IPCCommNode<example_t, Callback>>();
+    auto comm = std::make_shared<IPCCommNode<example_t, Callback>>("st");
     example_t my_msg;
 
     int* pint = new int;

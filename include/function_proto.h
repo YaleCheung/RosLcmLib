@@ -1,7 +1,6 @@
 #ifndef FUNCTIONPROTOTYPE_HHH
 #define FUNCTIONPROTOTYPE_HHH
 
-#include <functional>
 #include <string>
 
 template<typename Message>

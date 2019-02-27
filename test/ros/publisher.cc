@@ -2,13 +2,12 @@
 #include "std_msgs/String.h"
 #include <iostream> 
  
- 
 using Callback = FunctionPrototype::Callback;
-int main(int argc, char** argv){
+int main(int argc, char** argv) {
     init(argc, argv, "publisher_Node"); 
     auto node = IPCCommNode<std_msgs::String, Callback>();
     node.publish("topic_m", 1000);
-    Rate loop_rate(Freq(0.1));
+    Rate loop_rate(Freq(10));
  
     while(ok()){
         std_msgs::String msg;

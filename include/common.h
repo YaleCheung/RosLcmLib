@@ -1,4 +1,6 @@
 #include <cstdint>
+#include <memory>
+#include <cassert>
 
 #define _LCM
 
