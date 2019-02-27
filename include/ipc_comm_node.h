@@ -21,14 +21,15 @@
 template<typename Message, typename Callback>
 class IPCCommNode : public CommNode<Message, Callback>{
 public:
-  IPCCommNode(std::string node_name) :
+  IPCCommNode(const std::string& node_name) :
     _comm_entity(std::make_unique<ENTITY>()),
     _publisher(std::make_unique<PUBLISHER<Message>>(_comm_entity)),
     _subscriber(std::make_unique<SUBSCRIBER<Callback>>(_comm_entity)) {
 #ifdef _ROS
-    // ros need to be initialized before used;
-    char* argv[] = {"argv ignored"};
-    ros::init(1, argv, node_name);
+    int argc = 0;
+    //int& argc_ingored = argc;
+    char* argv = "ingored";
+    ros::init(argc, &argv, node_name);
 #endif
   }
 
