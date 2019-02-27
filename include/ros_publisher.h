@@ -2,6 +2,7 @@
 #define ROSPUBLISER_HHH 
 
 #include "ros/ros.h"
+#include "basic_publisher.h"
 #include <string>
 
 #include <array>
@@ -11,7 +12,7 @@ constexpr uint32_t max_channels = 10;
 template<typename Message>
 class ROSPublisher : public Publisher<Message> {
 public:
-    ROSPublisher(std::shared_ptr<ros::Publisher> entity) :
+    ROSPublisher(std::shared_ptr<ros::NodeHandle> entity) :
         _publish_method(entity), _channels_in_use(0) {}
 
     void publish(const std::string& channel, const Message& msg, uint32_t queue_size) {
@@ -20,7 +21,7 @@ public:
         if (idx < 0) {
             assert(_channels_in_use < max_channels);
             idx = _channels_in_use;
-            _publishers[idx] = _publish_method.advertise<Message>(channel, queue_size);
+            _publishers[idx] = _publish_method -> advertise<Message>(channel, queue_size);
             _channels[idx] = channel;
             ++ _channels_in_use;
         }

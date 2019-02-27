@@ -27,7 +27,8 @@ public:
     _subscriber(std::make_unique<SUBSCRIBER<Callback>>(_comm_entity)) {
 #ifdef _ROS
     // ros need to be initialized before used;
-    ros::init(1, "IPC", node_name);
+    char* argv[] = {"argv ignored"};
+    ros::init(1, argv, node_name);
 #endif
   }
 
@@ -43,7 +44,7 @@ public:
 #ifdef _LCM
       _comm_entity -> handle();
 #elif defined _ROS
-      _comm_entity -> spinOnce();
+      ros::spinOnce();
 #endif
 }
 
