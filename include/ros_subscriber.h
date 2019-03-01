@@ -11,7 +11,7 @@ public:
         _subscribe_method(entity) { }
 
     void subscribe(const std::string& channel, const Callback& callback, void* context, uint32_t queue_size) {       
-        boost::make_shared<void const> ptr(context);
+        auto ptr = reinterpret_cast<void* const>(context);
         _subscribe_method -> subscribe(channel, queue_size, callback, ptr);
     }
 
