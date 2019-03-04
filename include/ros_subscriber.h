@@ -11,8 +11,8 @@ public:
         _subscribe_method(entity) { }
 
     void subscribe(const std::string& channel, const Callback& callback, void* context, uint32_t queue_size) {       
-        auto ptr = reinterpret_cast<void* const>(context);
-        _subscribe_method -> subscribe(channel, queue_size, callback, ptr);
+        // need this pointer;
+        _subscribe_method -> subscribe(channel, queue_size, callback);
     }
 
     ~ROSSubscriber() {}

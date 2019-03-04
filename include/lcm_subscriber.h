@@ -13,7 +13,7 @@ public:
 
     void subscribe(const std::string& channel, const Callback& callback, void* context, uint32_t queue_size) {
         assert( (! channel.empty()) &&
-                _subscribe_method -> good()
+                _subscribe_method -> ok()
               );
         _subscribe_method -> subscribeFunction(channel, callback, context);
     }
