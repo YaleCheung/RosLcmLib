@@ -1,19 +1,23 @@
-#include "ros/ros.h"
+#include "function_proto.h"
+#include "rate.h"
 #include "std_msgs/String.h"
+#include <iostream>
+#include "ipc_comm_node.h"
 
-void chatterCallback(std_msgs::String::ConstPtr msg)
+
+using Callback = FunctionPrototype<std_msgs::String>::Callback;
+
+void chatterCallback(const std_msgs::String::ConstPtr& msg)
 {
+  std::cout << "ok hearded" << '\n';
   ROS_INFO("I heard: [%s]", msg->data.c_str());
 }
-// %EndTag(CALLBACK)%
 
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "listener");
-  ros::NodeHandle n;
-  ros::Subscriber sub = n.subscribe("chatter", 1000, chatterCallback);
+  auto node = std::make_shared<IPCCommNode<std_msgs::String, Callback>>("secnode");
 
+  node -> subscribe("topic_m", chatterCallback, nullptr, 2);
   ros::spin();
-
   return 0;
 }

@@ -21,16 +21,16 @@
 template<typename Message, typename Callback>
 class IPCCommNode : public CommNode<Message, Callback>{
 public:
-  IPCCommNode(const std::string& node_name) :
-    _comm_entity(std::make_unique<ENTITY>()),
-    _publisher(std::make_unique<PUBLISHER<Message>>(_comm_entity)),
-    _subscriber(std::make_unique<SUBSCRIBER<Callback>>(_comm_entity)) {
+  IPCCommNode(const std::string& node_name) {
 #ifdef _ROS
     int argc = 0;
     //int& argc_ingored = argc;
     char* argv = "ingored";
     ros::init(argc, &argv, node_name);
 #endif
+     _comm_entity = std::make_unique<ENTITY>();
+     _publisher = std::make_unique<PUBLISHER<Message>>(_comm_entity);
+     _subscriber = std::make_unique<SUBSCRIBER<Callback>>(_comm_entity);
   }
 
   void publish(const std::string& channel, const Message& msg, uint32_t queue_size) {
@@ -44,7 +44,7 @@ public:
   void handle() const {
 #ifdef _LCM
       _comm_entity -> handle();
-#elif defined _ROS
+#elif defined(_ROS)
       ros::spinOnce();
 #endif
 }
