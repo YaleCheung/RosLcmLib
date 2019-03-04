@@ -10,7 +10,7 @@
 #define ENTITY lcm::LCM
 #define PUBLISHER LCMPublisher
 #define SUBSCRIBER LCMSubscriber
-#elif defined _ROS
+#elif defined(_ROS)
 #include "ros_publisher.h"
 #include "ros_subscriber.h"
 #define ENTITY ros::NodeHandle
@@ -26,6 +26,7 @@ public:
     int argc = 0;
     //int& argc_ingored = argc;
     char* argv = "ingored";
+    // ros::init(argc, &argv, node_name);
     ros::init(argc, &argv, node_name);
 #endif
      _comm_entity = std::make_unique<ENTITY>();

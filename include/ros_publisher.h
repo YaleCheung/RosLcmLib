@@ -32,7 +32,7 @@ public:
 
 private:
     int _index_publisher(const std::string& channel) {
-        for(auto i = 0; i < _channels_in_use; ++ i) {
+        for(auto i = uint32_t(0); i < _channels_in_use; ++ i) {
             if(channel == _channels[i]) 
                 return i;
         }
