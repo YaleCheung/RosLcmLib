@@ -37,3 +37,6 @@ add_executable(ros_publisher test/ros/publisher.cc)
 target_link_libraries(ros_publisher ${catkin_LIBRARIES})
 add_executable(ros_subscriber test/ros/subscriber.cc)
 target_link_libraries(ros_subscriber ${catkin_LIBRARIES})
+
+add_executable(sub_test test/ros/sub_test.cc)
+target_link_libraries(sub_test ${catkin_LIBRARIES})

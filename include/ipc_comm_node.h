@@ -29,7 +29,7 @@ public:
     // ros::init(argc, &argv, node_name);
     ros::init(argc, &argv, node_name);
 #endif
-     _comm_entity = std::make_unique<ENTITY>();
+     _comm_entity = std::make_shared<ENTITY>();
      _publisher = std::make_unique<PUBLISHER<Message>>(_comm_entity);
      _subscriber = std::make_unique<SUBSCRIBER<Callback>>(_comm_entity);
   }

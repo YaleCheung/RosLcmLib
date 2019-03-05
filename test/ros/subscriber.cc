@@ -9,15 +9,15 @@ using Callback = FunctionPrototype<std_msgs::String>::Callback;
 
 void chatterCallback(const std_msgs::String::ConstPtr& msg)
 {
-  std::cout << "ok hearded" << '\n';
   ROS_INFO("I heard: [%s]", msg->data.c_str());
 }
 
 int main(int argc, char **argv)
 {
-  auto node = std::make_shared<IPCCommNode<std_msgs::String, Callback>>("secnode");
+  auto node = std::make_shared<IPCCommNode<std_msgs::String, Callback>>("listener");
 
-  node -> subscribe("topic_m", chatterCallback, nullptr, 2);
+  Callback callback = chatterCallback;
+  node -> subscribe("chatter", chatterCallback, nullptr, 1000);
   ros::spin();
   return 0;
 }
