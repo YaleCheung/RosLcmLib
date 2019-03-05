@@ -7,7 +7,7 @@
 
 #include <array>
 
-constexpr uint32_t max_channels = 10;
+constexpr uint32_t max_publishers = 10;
 
 template<typename Message>
 class ROSPublisher : public Publisher<Message> {
@@ -19,7 +19,7 @@ public:
         auto idx = _index_publisher(channel);
         // add a new publisher
         if (idx < 0) {
-            assert(_channels_in_use < max_channels);
+            assert(_channels_in_use < max_publishers);
             idx = _channels_in_use;
             _publishers[idx] = _publish_method -> advertise<Message>(channel, queue_size);
             _channels[idx] = channel;
@@ -40,8 +40,8 @@ private:
     }
 
     std::shared_ptr<ros::NodeHandle> _publish_method;
-    std::array<ros::Publisher, max_channels> _publishers;
-    std::array<std::string, max_channels> _channels;
+    std::array<ros::Publisher, max_publishers> _publishers;
+    std::array<std::string, max_publishers> _channels;
     
     uint32_t _channels_in_use;
 };

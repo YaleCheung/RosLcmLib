@@ -50,6 +50,9 @@ public:
 #endif
 }
 
+  std::shared_ptr<ENTITY> getNode() {
+      return _comm_entity;
+  }
   ~IPCCommNode() {};
 private:
   std::shared_ptr<ENTITY> _comm_entity;
