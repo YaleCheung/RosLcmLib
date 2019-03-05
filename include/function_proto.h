@@ -12,7 +12,7 @@ struct FunctionPrototype {
 #elif defined _ROS
    // typedef void (*Callback)(const boost::shared_ptr<Message const>& msg);
    // typedef const boost::function<void(const Message&)> Callback;
-   typedef boost::function<void(const boost::shared_ptr<Message const>&)> Callback;
+   typedef boost::function<void(const boost::shared_ptr<const Message>&)> Callback;
 #endif
 };
 
