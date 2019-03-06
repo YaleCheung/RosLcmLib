@@ -35,9 +35,6 @@ public:
 
         // if we've taken too much time we won't sleep
         if (sleep_time < Duration(0)) {
-            // if we've jumped forward in time, or the loop has taken more than a full
-            // extra
-            // cycle, reset our cycle
             if (actual_end > expected_end + _expected_cycle_time) 
                 _start = actual_end;
             return;

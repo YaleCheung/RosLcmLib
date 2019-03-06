@@ -1,14 +1,12 @@
 #ifndef RATIO_HHH
 #define RATIO_HHH
 
-#include <stdio.h>
-
 class Ratio {
 public:
     Ratio (double n, double d) :
       ratio(n / d) {}
 
-    double value() {
+    double value() const {
         return ratio;
     }
 private:
