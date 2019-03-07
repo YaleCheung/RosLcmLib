@@ -6,4 +6,4 @@
 #include <cstdint>
 #include "noncopyable.h"
 
-#endif
+#endif //COMMON_HHH

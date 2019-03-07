@@ -4,13 +4,13 @@
 class Ratio {
 public:
     Ratio (double n, double d) :
-      ratio(n / d) {}
+      _ratio(n / d) {}
 
     double value() const {
-        return ratio;
+        return _ratio;
     }
 private:
-    const double ratio;
+    const double _ratio;
 };
 
 class Freq : public Ratio {

@@ -5,17 +5,17 @@
 #include "common.h"
 
 #ifdef _LCM
-#include "lcm_publisher.h"
-#include "lcm_subscriber.h"
+#include "lcm_publisher_manager.h"
+#include "lcm_subscriber_manager.h"
 #define ENTITY lcm::LCM
-#define PUBLISHER LCMPublisher
-#define SUBSCRIBER LCMSubscriber
+#define PUBLISHER LCMPublisherManager
+#define SUBSCRIBER LCMSubscriberManager
 #elif defined(_ROS)
-#include "ros_publisher.h"
-#include "ros_subscriber.h"
+#include "ros_publisher_manager.h"
+#include "ros_subscriber_manager.h"
 #define ENTITY ros::NodeHandle
-#define PUBLISHER ROSPublisher
-#define SUBSCRIBER ROSSubscriber
+#define PUBLISHER ROSPublisherManager
+#define SUBSCRIBER ROSSubscriberManager
 # endif // include nothing, compiling will be failed
 
 template<typename Message, typename Callback>
@@ -24,22 +24,20 @@ public:
   IPCCommNode(const std::string& node_name) {
 #ifdef _ROS
       int argc = 0;
-      //int& argc_ingored = argc;
       char* argv[1] = {"ingored"};
-      // ros::init(argc, &argv, node_name);
       ros::init(argc, argv, node_name);
 #endif
       _comm_entity = std::make_shared<ENTITY>();
-      _publisher = std::make_unique<PUBLISHER<Message>>(_comm_entity);
-      _subscriber = std::make_unique<SUBSCRIBER<Callback>>(_comm_entity);
+      _publisher_manager = std::make_unique<PUBLISHER<Message>>(_comm_entity);
+      _subscriber_manager = std::make_unique<SUBSCRIBER<Callback>>(_comm_entity);
   }
 
   void publish(const std::string& channel, const Message& msg, uint32_t queue_size) {
-      _publisher->publish(channel, msg, queue_size);
+      _publisher_manager->publish(channel, msg, queue_size);
   }
 
   void subscribe(const std::string& channel, const Callback& callback, void* context, uint32_t queue_size = 0) {
-      _subscriber->subscribe(channel, callback, context, queue_size);
+      _subscriber_manager->subscribe(channel, callback, context, queue_size);
   }
 
   void handle() const {
@@ -53,8 +51,8 @@ public:
   ~IPCCommNode() {};
 private:
   std::shared_ptr<ENTITY> _comm_entity;
-  std::unique_ptr<Publisher<Message>> _publisher;
-  std::unique_ptr<Subscriber<Callback>> _subscriber;
+  std::unique_ptr<PublisherManager<Message>> _publisher_manager;
+  std::unique_ptr<SubscriberManager<Callback>> _subscriber_manager;
 };
 
 #endif //IPCCOMMNODE_HHH
