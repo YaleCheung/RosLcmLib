@@ -20,11 +20,12 @@ public:
     ~ROSSubscriber() {}
 
 private:
+    static constexpr uint32_t max_subscribers = 10;
+
     std::shared_ptr<ros::NodeHandle> _subscribe_method;
     std::array<ros::Subscriber, max_subscribers> _subscribers;
 
     uint32_t _channels_in_use;
-    static constexpr uint32_t max_subscribers = 10;
 };
 
 #endif //ROSSUBSCRIBER_HHH 

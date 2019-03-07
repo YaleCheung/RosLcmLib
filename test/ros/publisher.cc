@@ -15,9 +15,8 @@ int main(int argc, char** argv) {
     while(ros::ok()){
         std_msgs::String msg;
         msg.data = "Hello wanzew!";
-        node -> publish("chatter", msg, 2);
+        node -> publish("chatter", msg, 1);
         loop_rate.sleep();
-        //std::cout<<"print from cout: Hello wanzew...\n";
     }
     return 0;
 }

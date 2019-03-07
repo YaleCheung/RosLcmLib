@@ -15,7 +15,7 @@ int main(int argc, char **argv)
   // ros::init(argc, argv, "listener");
   // ros::NodeHandle n;
   // Callback callback = chatterCallback;
-  node -> subscribe("chatter", chatterCallback, nullptr, 1000);
+  node -> subscribe("chatter", chatterCallback, nullptr, 1);
   // auto sub =n.subscribe("chatter", 1000, callback);
   while(ros::ok()) {
      node->handle();

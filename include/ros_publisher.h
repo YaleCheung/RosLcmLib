@@ -38,12 +38,13 @@ private:
         return -1;
     }
 
+    static constexpr uint32_t max_publishers = 10;
+
     std::shared_ptr<ros::NodeHandle> _publish_method;
     std::array<ros::Publisher, max_publishers> _publishers;
     std::array<std::string, max_publishers> _channels;
     
     uint32_t _channels_in_use;
-    static constexpr uint32_t max_publishers = 10;
 };
 
 #endif //ROSPUBLISER_HHH

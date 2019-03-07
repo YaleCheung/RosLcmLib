@@ -25,9 +25,9 @@ public:
 #ifdef _ROS
       int argc = 0;
       //int& argc_ingored = argc;
-      char* argv = "ingored";
+      char* argv[1] = {"ingored"};
       // ros::init(argc, &argv, node_name);
-      ros::init(argc, &argv, node_name);
+      ros::init(argc, argv, node_name);
 #endif
       _comm_entity = std::make_shared<ENTITY>();
       _publisher = std::make_unique<PUBLISHER<Message>>(_comm_entity);
