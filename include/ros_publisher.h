@@ -3,11 +3,10 @@
 
 #include "ros/ros.h"
 #include "basic_publisher.h"
-#include <string>
 
+#include <string>
 #include <array>
 
-constexpr uint32_t max_publishers = 10;
 
 template<typename Message>
 class ROSPublisher : public Publisher<Message> {
@@ -44,6 +43,7 @@ private:
     std::array<std::string, max_publishers> _channels;
     
     uint32_t _channels_in_use;
+    static constexpr uint32_t max_publishers = 10;
 };
 
 #endif //ROSPUBLISER_HHH

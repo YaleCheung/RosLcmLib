@@ -4,7 +4,7 @@
 #include <string>
 
 template<typename Message, typename Callback>
-class CommNode {
+class CommNode : public NonCopyable {
 public:   
     virtual void publish(const std::string& channel, const Message& msg, uint32_t queue_size) = 0;
     virtual void subscribe(const std::string& channel, const Callback& callback, void* context, uint32_t queue_size) = 0;

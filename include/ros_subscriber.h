@@ -4,7 +4,6 @@
 #include "ros/ros.h"
 #include "basic_subscriber.h"
 
-constexpr uint32_t max_subscribers = 10;
 
 template<typename Callback>
 class ROSSubscriber : public Subscriber<Callback> {
@@ -25,6 +24,7 @@ private:
     std::array<ros::Subscriber, max_subscribers> _subscribers;
 
     uint32_t _channels_in_use;
+    static constexpr uint32_t max_subscribers = 10;
 };
 
 #endif //ROSSUBSCRIBER_HHH 

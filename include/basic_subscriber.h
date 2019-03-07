@@ -1,11 +1,10 @@
 #ifndef SUBSCRIBER_HHH
 #define SUBSCRIBER_HHH
 
-#include <string>
-#include <memory>
+#include "common.h"
 
 template<typename Callback>
-class Subscriber {
+class Subscriber : NonCopyable {
 public:
     virtual void subscribe(const std::string& channel, const Callback& callback, void* context, uint32_t queue_size) = 0;
     virtual ~Subscriber() {};

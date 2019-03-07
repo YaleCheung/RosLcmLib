@@ -1,6 +1,9 @@
-#include <cstdint>
+#ifndef COMMON_HHH
+#define COMMON_HHH
+
+#include <string>
 #include <memory>
-#include <cassert>
+#include <cstdint>
+#include "noncopyable.h"
 
-
-//constexpr uint32_t Mega = 1000000000UL;
+#endif
