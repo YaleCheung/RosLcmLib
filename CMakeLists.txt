@@ -1,12 +1,6 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(CommuFrameworkTest)
 
-## Compile as C++11, supported in ROS Kinetic and newer
-#add_compile_options(-std=c++11)
-
-## Find catkin macros and libraries
-## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
-## is used, also find other catkin packages
 ADD_DEFINITIONS(-D_ROS)
 
 SET(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g -fsanitize=address")
@@ -22,7 +16,9 @@ include_directories(
     include
       ${catkin_INCLUDE_DIRS}
       #${EIGEN3_INCLUDE_DIR}
-      ${PCL_INCLUDE_DIRS})
+      ${PCL_INCLUDE_DIRS}
+      include/detail
+      )
 
 catkin_package(
             CATKIN_DEPENDS roscpp std_msgs sensor_msgs

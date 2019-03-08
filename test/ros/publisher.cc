@@ -10,7 +10,7 @@ using Callback = FunctionPrototype<std_msgs::String>::Callback;
 int main(int argc, char** argv) {
     //init(argc, argv, "publisher_Node");
     auto node = std::make_shared<IPCCommNode<std_msgs::String, Callback>>("autonode");
-    auto loop_rate = Rate(Freq(0.1));
+    auto loop_rate = Rate(Freq(1));
  
     while(ros::ok()){
         std_msgs::String msg;

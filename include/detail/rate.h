@@ -10,11 +10,13 @@ using Duration = std::chrono::nanoseconds;
 using Clock = std::chrono::high_resolution_clock;
 using Time = Clock::time_point;
 
+
+
 class Rate {
 public:
-    Rate(Freq freq):
+    Rate(const Freq freq):
       _start(Clock::now()),
-      _expected_cycle_time(int(1000000000ul / freq.value())),
+      _expected_cycle_time(uint64_t(1000000000ul / freq.value())),
       _actual_cycle_time(0) {}
 
     void sleep() {
@@ -22,11 +24,10 @@ public:
 
         auto actual_end = Clock::now();
 
-        // detect backward jumps in time
+        // the clock would jump backward; prevent it;
         if (actual_end < _start)
             expected_end = actual_end + _expected_cycle_time;
 
-        // calculate the time we'll sleep for
         auto sleep_time = expected_end - actual_end;
 
         _actual_cycle_time = actual_end - _start;
@@ -43,7 +44,9 @@ public:
         std::this_thread::sleep_until(expected_end);
     }
     void reset() {_start = Clock::now();}
+
     Duration cycleTime() const {return _actual_cycle_time;}
+
     Duration expectedCycleTime() const { return _expected_cycle_time; }
 
 private:
