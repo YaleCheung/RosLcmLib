@@ -2,7 +2,7 @@
 #define IPCCOMMNODE_HHH
 
 #include "basic_node.h"
-#include "common.h"
+#include "detail/common.h"
 
 #ifdef _LCM
 #include "lcm_publisher_manager.h"
@@ -10,13 +10,16 @@
 #define ENTITY lcm::LCM
 #define PUBLISHER LCMPublisherManager
 #define SUBSCRIBER LCMSubscriberManager
+
 #elif defined(_ROS)
+
 #include "ros_publisher_manager.h"
 #include "ros_subscriber_manager.h"
 #define ENTITY ros::NodeHandle
 #define PUBLISHER ROSPublisherManager
 #define SUBSCRIBER ROSSubscriberManager
-# endif // include nothing, compiling will be failed
+
+#endif // include nothing, compiling process will be failed
 
 template<typename Message, typename Callback>
 class IPCCommNode : public CommNode<Message, Callback> {
