@@ -21,6 +21,8 @@
 
 #endif // include nothing, compiling process will be failed
 
+// an abstract fractory pattern impletation of communication;
+
 template<typename Message, typename Callback>
 class IPCCommNode : public CommNode<Message, Callback> {
 public:
