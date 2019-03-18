@@ -2,7 +2,8 @@
 #define BUFFER_HHH
 
 #include <cstring>
-#include <cstdint>
+#
+nclude <cstdint>
 
 constexpr uint32_t DEFAULT = 4000; // 4k buffer
 
@@ -15,6 +16,13 @@ public:
             //bzero is ignored for performance;
     }
     // append a piece of data
+    void append(const char* data, uint32_t len) {
+        if (len < reminder()) {
+            memcpy(_buf + _cur_avail_pos, data, len);
+            _cur_avail_pos += len;
+        
+    }
+    //
     bool try_append(const char* data, uint32_t len) {
         if (len > reminder()) 
             return false;
@@ -51,7 +59,7 @@ public:
         return _size - _cur_avail_pos;
     }
 
-    uint32_t length() {
+    uint32_t length() const {
         return _cur_avail_pos;
     }
 

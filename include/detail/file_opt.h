@@ -1,5 +1,5 @@
-#ifndef FileOPT_HHH
-#define FileOPT_HHH
+#ifndef FILEOPT_HHH
+#define FILEOPT_HHH
 
 #include <string>
 #include <cassert>
@@ -31,4 +31,4 @@ public:
     }
 };
 
-#endif //FileOPT_HHH
+#endif //FILEOPT_HHH
