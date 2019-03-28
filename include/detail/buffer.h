@@ -2,8 +2,7 @@
 #define BUFFER_HHH
 
 #include <cstring>
-#
-nclude <cstdint>
+#include <cstdint>
 
 constexpr uint32_t DEFAULT = 4000; // 4k buffer
 

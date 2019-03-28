@@ -7,7 +7,7 @@
 #include <string>
 
 
-class StringPiece { // copyable
+class StringPiece { 
 public:
   // constructor 
   StringPiece() : _data(""), _length(0) { }

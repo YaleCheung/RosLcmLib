@@ -9,7 +9,9 @@ public:
         _size(N-1) {
  		#ifdef _WIN32
         auto has = _char_index(_path, '\\');
+        #else
         auto has = _char_index(_path, '/'); // unix-like platform assumption;
+        #endif
         if(has) {
             _name = has + 1;
             _size -= static_cast<int>(_name - _path);
