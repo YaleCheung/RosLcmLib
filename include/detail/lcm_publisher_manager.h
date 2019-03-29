@@ -1,15 +1,15 @@
 #ifndef LCMPUBLISHERMANAGER_HHH
 #define LCMPUBLISHERMANAGER_HHH
 
-#include "basic_publisher_manager.h"
 #include <lcm/lcm-cpp.hpp>
+#include "noncopyable.h"
 
-template<typename Message> 
-class LCMPublisherManager : public PublisherManager<Message> {
+class LCMPublisherManager : Noncopyable {
 public:
     LCMPublisherManager(std::shared_ptr<lcm::LCM> entity) :
         _publish_method(entity) { }
 
+    template<typename Message>
     void publish(const std::string& channel, const Message& msg, uint32_t buffer_size) {
         assert(channel != "" && _publish_method->good());
         _publish_method->publish(channel, &msg);

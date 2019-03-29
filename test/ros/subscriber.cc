@@ -11,7 +11,7 @@ void chatterCallback(const std_msgs::String::ConstPtr& msg)
 
 int main(int argc, char **argv)
 {
-  auto node = std::make_shared<IPCCommNode<std_msgs::String, Callback>>("listener");
+  auto node = std::make_shared<IPCCommNode>("listener");
   node -> subscribe("chatter", chatterCallback, nullptr, 1);
   while(ros::ok()) 
      node->handle();

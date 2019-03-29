@@ -1,16 +1,15 @@
 #ifndef LCMSUBSCRIBERMANAGER_HHH 
 #define LCMSUBSCRIBERMANAGER_HHH 
 
-#include "basic_subscriber_manager.h"
 #include <cstddef>
 #include <lcm/lcm-cpp.hpp>
 
-template<typename Callback>
-class LCMSubscriberManager : public SubscriberManager<Callback> {
+class LCMSubscriberManager : NonCopyable {
 public:
     LCMSubscriberManager(std::shared_ptr<lcm::LCM> entity) :
         _subscribe_method(entity) {}
 
+    template <typename Callback>
     void subscribe(const std::string& channel, const Callback& callback, 
                    void* context, uint32_t queue_size) {
         assert( (! channel.empty()) &&

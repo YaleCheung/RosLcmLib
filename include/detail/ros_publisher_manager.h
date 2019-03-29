@@ -2,18 +2,17 @@
 #define ROSPUBLISERMANAGER_HHH 
 
 #include "ros/ros.h"
-#include "basic_publisher_manager.h"
 
 #include <string>
 #include <array>
 
 
-template<typename Message>
-class ROSPublisherManager : public PublisherManager<Message> {
+class ROSPublisherManager : NonCopyable {
 public:
     ROSPublisherManager(std::shared_ptr<ros::NodeHandle> entity) :
         _publish_method(entity), _channels_in_use(0) {}
 
+    template<typename Message>
     void publish(const std::string& channel, const Message& msg, uint32_t queue_size) {
         auto idx = _index_publisher(channel);
         // add a new publisher
