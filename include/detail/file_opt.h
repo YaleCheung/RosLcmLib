@@ -1,47 +1,34 @@
-#ifndef FILEPATH_HHH
-#define FILEPATH_HHH
+#ifndef FILEOPT_HHH
+#define FILEOPT_HHH
 
-class FilePath {
+#include <string>
+#include <cassert>
+#include <experimental/filesystem>
+#include <vector>
+#include <algorithm>
+#include <memory>
+
+namespace fs = std::experimental::filesystem;
+
+class FileOpt {
 public:
-    template<int N>
-    FilePath(const char(&name)[N]):
-        _path(path),
-        _size(N-1) {
-        const char* has = _char_index(_path, '/'); // unix-like platform assumption;
-        if(has) {
-            _name = has + 1;
-            _size -= static_cast<int>(_name - _path);
-        } else 
-            _name = _path; // relative path;
+    static auto subFiles(const fs::path& father = "") {
+        assert(CheckValidDir(father));
+        
+        std::vector<fs::path> subfiles;
+        for(const auto& son : fs::directory_iterator(father)) 
+            subfiles.emplace_back(son);
+        std::sort(subfiles.begin(), subfiles.end());
+        return subfiles;
     }
 
-    explicit FilePath(const char* path) :
-        _path(path),
-        _size(strlen(path)) {
-        const char* has = _char_index(_path, '/'); // unix-like platform assumption;
-        if (has) {
-            _name = has + 1;
-            _size -= static_cast<int>(_name - _path);
-        } else 
-            _name = _path; // relative path;
+    static auto isValidDir(const fs::path& p) {
+        return fs::is_directory(p);
     }
 
-    const char* getExtension() {
-        const char* has = _char_index(_name, '.');
-        if (has && has != _name) 
-            // hiding file, start with '.'; eg: '.file' 
-               return has + 1;
-        return nullptr;
+    static auto isValidFile(const fs::path& p) {
+        return fs::is_regular_file(p);
     }
-
-
-private:
-    const char* _char_index(const char* path, const char separator) {
-        const char* ret = strchr(_path, separator);
-        return ret;
-    }
-    const char* _path;
-    const char* _name;
-    int _size;
 };
-#endif //FILEPATH_HHH
+
+#endif //FILEOPT_HHH

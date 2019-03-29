@@ -34,7 +34,6 @@ public:
 
         _start = expected_end;
 
-        // if we've taken too much time we won't sleep
         if (sleep_time < Duration(0)) {
             if (actual_end > expected_end + _expected_cycle_time) 
                 _start = actual_end;

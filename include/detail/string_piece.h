@@ -7,7 +7,7 @@
 #include <string>
 
 
-class StringPiece { // copyable
+class StringPiece { 
 public:
   // constructor 
   StringPiece() : _data(""), _length(0) { }
@@ -38,13 +38,13 @@ public:
   }
 
   // get
-  const char* data() const { return _data; }
-  int length() const { return _length; }
+  auto data() const { return _data; }
+  auto length() const { return _length; }
 
   // check empty
-  bool empty() const { return _length == 0; }
+  auto empty() const { return _length == 0; }
 
-  char operator[](int n) const {
+  auto operator[](int n) const {
     assert(n < length());
     return _data[n];
   }
@@ -57,7 +57,7 @@ public:
     _length -= n;
   }
 
-  std::string toString() const { return std::string(_data, _length); }
+  auto toString() const { return std::string(_data, _length); }
 
   int compare(const StringPiece& b) const;
 
@@ -72,7 +72,7 @@ public:
 };
 
 // compare
-inline int StringPiece::compare(const StringPiece& b) const {
+inline auto StringPiece::compare(const StringPiece& b) const {
   const int min_len = (_length < b._length) ? _length : b._length;
   int r = memcmp(_data, b._data, min_len);
   if (r == 0) {
@@ -81,12 +81,12 @@ inline int StringPiece::compare(const StringPiece& b) const {
   }
   return r;
 }
-inline bool operator==(const StringPiece& l, const StringPiece& r) {
+inline auto operator==(const StringPiece& l, const StringPiece& r) {
   return ((l.length() == r.length()) &&
           (memcmp(l.data(), r.data(), r.length()) == 0));
 }
 
-inline bool operator!=(const StringPiece& l, const StringPiece& r) {
+inline auto operator!=(const StringPiece& l, const StringPiece& r) {
   return !(l == r);
 }
 
